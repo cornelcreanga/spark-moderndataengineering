@@ -35,6 +35,7 @@ object SparkStatefulAggregationsApp extends SparkStructuredStreamingApplication[
    * @return a StreamingQuery that can be used for application introspection
    */
   override def runApp(): StreamingQuery = {
+    createDatabasesIfNotExists(sparkSession)
     val conf = sparkSession.conf
     // 1. generates a new inputStream (DataStreamReader)
     // that uses MicroBatch processing to pass micro-batches as DataFrames
@@ -65,6 +66,31 @@ object SparkStatefulAggregationsApp extends SparkStructuredStreamingApplication[
   override def validateConfig()(implicit sparkSession: SparkSession): Boolean = {
     super.validateConfig()
     // add any additional checks (could check for source, sink formats)
+  }
+
+  def createDatabasesIfNotExists(spark: SparkSession): Unit = {
+    val sqlWarehouse = spark.catalog.getDatabase("default").locationUri
+    val bronzeDB = s"$sqlWarehouse/bronze"
+    val silverDB = s"$sqlWarehouse/silver"
+
+    spark.sql(
+      s"""
+        CREATE DATABASE IF NOT EXISTS bronze
+        COMMENT 'raw source data'
+        LOCATION '$bronzeDB'
+        WITH
+        DBPROPERTIES(TEAM='coffee-core',TEAM_SLACK='#coffeeco-eng-core');
+        """)
+
+    spark.sql(
+      s"""
+        CREATE DATABASE IF NOT EXISTS silver
+        COMMENT 'reliable source data'
+        LOCATION '$silverDB'
+        WITH
+        DBPROPERTIES(TEAM='coffee-core',TEAM_SLACK='#coffeeco-eng-core');
+        """)
+
   }
 
   run()

@@ -47,8 +47,8 @@ $SPARK_HOME/bin/spark-submit \
   --conf "spark.driver.memory=1g" \
   --conf "spark.kubernetes.executor.request.cores=500m" \
   --conf "spark.kubernetes.executor.limit.cores=1" \
-  --conf "spark.executor.memory=2g" \
-  --conf "spark.executor.instances=4" \
+  --conf "spark.executor.memory=1g" \
+  --conf "spark.executor.instances=1" \
   --conf "spark.sql.warehouse.dir=${S3_BASE_PATH}/warehouse" \
   --conf "spark.app.sink.format=parquet" \
   --conf "spark.app.sink.queryName=coffee_orders_aggs" \

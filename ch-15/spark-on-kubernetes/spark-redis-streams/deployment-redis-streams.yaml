@@ -47,8 +47,8 @@ data:
     spark.dynamicAllocation.shuffleTracking.enabled true
     spark.dynamicAllocation.sustainedSchedulerBacklogTimeout 30s
     spark.dynamicAllocation.executorIdleTimeout 120s
-    spark.dynamicAllocation.minExecutors 2
-    spark.dynamicAllocation.maxExecutors 4
+    spark.dynamicAllocation.minExecutors 1
+    spark.dynamicAllocation.maxExecutors 3
     spark.dynamicAllocation.executorAllocationRatio 0.25
 
     spark.kubernetes.driver.request.cores 500m
@@ -57,8 +57,8 @@ data:
     spark.kubernetes.executor.request.cores 500m
     spark.kubernetes.executor.limit.cores 1
 
-    spark.executor.instances 4
-    spark.executor.memory 2g
+    spark.executor.instances 2
+    spark.executor.memory 1g
 
     # SQL / Security / Timezone
     spark.redaction.regex (?i)secret|password|token

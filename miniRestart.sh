@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/bin/zsh
 
 minikube stop
 minikube delete
@@ -10,8 +10,8 @@ minikube start \
   --network-plugin=cni \
   --cni calico \
   --embed-certs \
-  --memory 32g \
-  --cpus 8 \
+  --memory 8g \
+  --cpus 6 \
   --disk-size 80g
 
 minikube addons enable metrics-server
